@@ -4,5 +4,6 @@ import App from './App';
 import { YellowBox } from 'react-native';
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 YellowBox.ignoreWarnings(['Warning: Failed prop type:', 'Module RCTImageLoader']);
+YellowBox.ignoreWarnings(['Module SQLite requires', 'Module RCTImageLoader']);
 
 AppRegistry.registerComponent('CarsSQLiteApp', () => App);

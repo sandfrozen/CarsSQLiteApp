@@ -1,9 +1,22 @@
 import React from 'react';
-import { View, Text, Button, Easing, Animated, ScrollView } from 'react-native';
+import { View, Text, Button, Easing, Animated, ScrollView, ListView } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Icon, ButtonGroup } from 'react-native-elements'
+import { List, ListItem, Tile } from 'react-native-elements'
+
+var SQLite = require('react-native-sqlite-storage');
+var db = SQLite.openDatabase("carsDB.db");
 
 class CarsScreen extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      carList: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
+    };
+
+    this.renderRow = this.renderRow.bind(this);
+  }
 
   static navigationOptions = ({ navigation }) => {
     const params = navigation.state.params || {};
@@ -31,6 +44,7 @@ class CarsScreen extends React.Component {
   };
 
   componentWillMount() {
+    this.getCarsFromDb();
     this.props.navigation.setParams({ _goToSearch: this.goToSearch });
     this.props.navigation.setParams({ _goToAdd: this.goToAdd });
   }
@@ -43,34 +57,87 @@ class CarsScreen extends React.Component {
     this.props.navigation.navigate('Add');
   }
 
+  errorCB(err) {
+    console.log("SQL Error: " + err);
+  }
+
+  successCB() {
+    console.log("SQL executed fine");
+  }
+
+  openCB() {
+    console.log("Database OPENED");
+  }
+
+  checkDatabase() {
+    db.transaction((tx) => {
+      tx.executeSql('CREATE TABLE IF NOT EXISTS `Cars` (`id` INTEGER, `name` TEXT, `model`	TEXT, `color`	TEXT, `doors`	INTEGER, `year`	INTEGER, `km`	INTEGER, `price`	REAL, PRIMARY KEY(`id`) );', [], (tx, results) => {
+        console.log("CREATE completed");
+        console.log(tx);
+        console.log(results);
+      });
+    });
+    // db.transaction((tx) => {
+    //   tx.executeSql('INSERT INTO `Cars`(`name`,`model`,`color`,`doors`,`year`,`km`,`price`) VALUES ("Volvo","V40","blue",4,2018,123,321.32);', [], (tx, results) => {
+    //     console.log("INSERT completed");
+    //     console.log("Rows Affected: " + results.rowsAffected);
+    //     console.log("Insert ID: " + results.insertId);
+    //   });
+    // });
+    this.getCarsFromDb();
+  }
+
   getCarsFromDb() {
-    let carsCount = 12;
-    this.props.navigation.setParams({ cars: carsCount });
+    db.transaction((tx) => {
+      tx.executeSql('SELECT * FROM Cars;', [], (tx, results) => {
+        console.log("SELECT completed");
+        var temp = [];
+        let len = results.rows.length;
+        for (let i = 0; i < len; i++) {
+          temp.push(results.rows.item(i));
+        }
+        this.setState({
+          carList: this.state.carList.cloneWithRows(temp),
+        });
+        this.props.navigation.setParams({ cars: temp.length });
+      });
+    });
   }
 
   deleteCar({ carId: id }) {
     console.log("Cars recieved id: " + id);
   }
 
+  renderRow(rowData, sectionID) {
+    return (
+      <ListItem
+        leftIcon={{ name: 'directions-car' }}
+        title={rowData.name + " " + rowData.model}
+        subtitle={rowData.km + " km" + "  /  " + (rowData.price).toFixed(2) + " PLN"}
+        rightIcon={{ name: 'chevron-right' }}
+        onPress={() => {
+          /* 1. Navigate to the Details route with params */
+          this.props.navigation.navigate('Details', {
+            car: rowData,
+            CarsScreen: this,
+          });
+        }}
+      />
+    )
+  }
+
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Cars Screen</Text>
-        <Button
-          title="Go to Details"
-          onPress={() => {
-            /* 1. Navigate to the Details route with params */
-            this.props.navigation.navigate('Details', {
-              itemId: 86,
-              otherParam: 'anything you want here',
-              CarsScreen: this,
-            });
-          }}
-        />
-        <Button
-          title="Update the title"
-          onPress={() => this.getCarsFromDb()}
-        />
+        <ScrollView style={{ width: "100%" }}>
+          <List>
+            <ListView
+              dataSource={this.state.carList}
+              renderRow={this.renderRow}
+              enableEmptySections={true}
+            />
+          </List>
+        </ScrollView>
       </View>
     );
   }
@@ -90,7 +157,7 @@ class DetailsScreen extends React.Component {
     const params = navigation.state.params;
 
     return {
-      title: params ? params.otherParam : 'A Nested Details Screen',
+      title: params ? params.car.name : 'A Nested Details Screen',
       headerRight: (
         <Icon
           raised
@@ -110,13 +177,11 @@ class DetailsScreen extends React.Component {
   render() {
     /* 2. Read the params from the navigation state */
     const params = this.props.navigation.state.params;
-    const itemId = params ? params.itemId : null;
-    const otherParam = params ? params.otherParam : null;
+    const car = params ? params.car : null;
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Details Screen</Text>
-        <Text>itemId: {JSON.stringify(itemId)}</Text>
-        <Text>otherParam: {JSON.stringify(otherParam)}</Text>
+        <Text>car: {JSON.stringify(car)}</Text>
         <Button
           title="Go back"
           onPress={() => this.props.navigation.goBack()}
@@ -194,15 +259,15 @@ class SerachScreen extends React.Component {
     const buttons = [{ element: component1 }, { element: component2 }]
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <ScrollView>
-        <Text>Search Screen</Text>
-      </ScrollView>
-      <ButtonGroup
-        buttons={buttons}
-        containerStyle={{ position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
-        onPress={(index) => index == 0 ? this.props.navigation.goBack() : this.searchCar()}
-      />
-    </View>
+        <ScrollView>
+          <Text>Search Screen</Text>
+        </ScrollView>
+        <ButtonGroup
+          buttons={buttons}
+          containerStyle={{ position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
+          onPress={(index) => index == 0 ? this.props.navigation.goBack() : this.searchCar()}
+        />
+      </View>
     );
   }
 }
