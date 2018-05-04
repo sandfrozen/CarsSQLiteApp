@@ -103,7 +103,7 @@ class DetailsScreen extends React.Component {
   };
 
   deleteCar = () => {
-    this.props.navigation.state.params.CarsScreen.deleteCar({ carId: 1 });
+    //this.props.navigation.state.params.CarsScreen.deleteCar({ carId: 1 });
     this.props.navigation.goBack();
   }
 
@@ -141,6 +141,7 @@ class AddScreen extends React.Component {
 
   addCar = () => {
     //this.props.navigation.state.params.CarsScreen.addCar({ carId: 1 });
+    console.log("AddScreen Add")
     this.props.navigation.goBack();
   }
 
@@ -160,8 +161,8 @@ class AddScreen extends React.Component {
         </ScrollView>
         <ButtonGroup
           buttons={buttons}
-          containerStyle={{ widht: '100%', position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
-          onPress={(index) => index == 1 ? this.props.navigation.goBack() : this.props.navigation.goBack()}
+          containerStyle={{ position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
+          onPress={(index) => index == 0 ? this.props.navigation.goBack() : this.addCar()}
         />
       </View>
     );
@@ -181,14 +182,15 @@ class SerachScreen extends React.Component {
     }
   };
 
-  addCar = () => {
-    this.props.navigation.state.params.CarsScreen.searchCars({ carId: 1 });
+  searchCar = () => {
+    //this.props.navigation.state.params.CarsScreen.searchCars({ carId: 1 });
+    console.log("SerachScreen Search");
     this.props.navigation.goBack();
   }
 
   render() {
     const component1 = () => <Text style={{ color: '#007aff', fontSize: 16 }}>Back</Text>
-    const component2 = () => <Text style={{ color: 'green', fontWeight: 'bold', fontSize: 16 }}>Serach</Text>
+    const component2 = () => <Text style={{ color: 'green', fontWeight: 'bold', fontSize: 16 }}>Search</Text>
     const buttons = [{ element: component1 }, { element: component2 }]
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -197,8 +199,8 @@ class SerachScreen extends React.Component {
       </ScrollView>
       <ButtonGroup
         buttons={buttons}
-        containerStyle={{ widht: '100%', position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
-        onPress={(index) => index == 1 ? this.props.navigation.goBack() : this.props.navigation.goBack()}
+        containerStyle={{ position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
+        onPress={(index) => index == 0 ? this.props.navigation.goBack() : this.searchCar()}
       />
     </View>
     );
