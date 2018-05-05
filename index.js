@@ -6,5 +6,7 @@ YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTIm
 YellowBox.ignoreWarnings(['Warning: Failed prop type:']);
 YellowBox.ignoreWarnings(['Module SQLite requires']);
 YellowBox.ignoreWarnings(['Class RCTCxxModule was not exported.']);
+YellowBox.ignoreWarnings(['RCTBridge required dispatch_sync to load RCT']);
+YellowBox.ignoreWarnings(['Required dispatch_sync to load constants']);
 
 AppRegistry.registerComponent('CarsSQLiteApp', () => App);
