@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, Easing, Animated, ScrollView, ListView, Alert, AlertIOS, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native';
+import { View, Text, Button, Easing, Animated, ScrollView, ListView, Alert, AlertIOS, StyleSheet, TextInput, KeyboardAvoidingView, Picker } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Icon, ButtonGroup } from 'react-native-elements'
 import { List, ListItem, Tile } from 'react-native-elements'
@@ -36,7 +36,9 @@ class CarsScreen extends React.Component {
   }
 
   goToSearch = () => {
-    this.props.navigation.navigate('Search');
+    this.props.navigation.navigate('Search', {
+      CarsScreen: this,
+    })
   }
 
   goToAdd = () => {
@@ -70,6 +72,31 @@ class CarsScreen extends React.Component {
         this.setState({
           carList: this.state.carList.cloneWithRows(temp),
         })
+      })
+    })
+  }
+
+  async sqlSelectAllCarsWithCon({ query: query }) {
+    console.log(query)
+
+    db.transaction((tx) => {
+      tx.executeSql(query, [], (tx, results) => {
+        let temp = []
+        let len = results.rows.length
+        for (let i = 0; i < len; i++) {
+          temp.push(results.rows.item(i))
+        }
+        this.setState({
+          carList: this.state.carList.cloneWithRows(temp),
+        })
+        AlertIOS.alert(
+          'Founded ' + this.state.carList.getRowCount() + " cars.",
+          '',
+          [
+            { text: 'OK', style: 'cancel' },
+          ],
+        )
+        
       })
     })
   }
@@ -655,6 +682,17 @@ class EditScreen extends React.Component {
 class SerachScreen extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      name: "",
+      model: "",
+      color: "",
+
+      doors: null,
+      year: null,
+      km: null,
+      price: null,
+    }
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -667,24 +705,121 @@ class SerachScreen extends React.Component {
   };
 
   searchCar = () => {
-    //this.props.navigation.state.params.CarsScreen.searchCars({ carId: 1 });
-    console.log("SerachScreen Search")
+
+    let query = 'SELECT * FROM Cars WHERE name LIKE \'%' + this.state.name + '%\' AND model LIKE \'%' + this.state.model + '%\' AND color LIKE \'%' + this.state.color + '%\''
+
+    if (this.state.doors) {
+      query = query + ' AND doors=' + this.state.doors;
+    }
+    if (this.state.year) {
+      query = query + ' AND year=' + this.state.year;
+    }
+    if (this.state.km) {
+      query = query + ' AND km=' + this.state.km;
+    }
+    if (this.state.price) {
+      query = query + ' AND price=' + this.state.price;
+    }
+
+    query = query + ';'
+
+    this.props.navigation.state.params.CarsScreen.sqlSelectAllCarsWithCon({ query: query });
+    this.props.navigation.goBack()
+  }
+
+  selectAll() {
+    this.props.navigation.state.params.CarsScreen.sqlSelectAllCars()
     this.props.navigation.goBack()
   }
 
   render() {
     const component1 = () => <Icon name='keyboard-return' type='material-icons' color={iosBlue} />
-    const component2 = () => <Icon name='search' type='material-icons' color={iosBlue} />
-    const buttons = [{ element: component1 }, { element: component2 }]
+    const component2 = () => <Icon name='all-inclusive' type='material-icons' color={iosBlue} />
+    const component3 = () => <Icon name='search' type='material-icons' color={iosBlue} />
+    const buttons = [{ element: component1 }, { element: component2 }, { element: component3 }]
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ScrollView>
-          <Text>Search Screen</Text>
-        </ScrollView>
+      <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
+        <KeyboardAwareScrollView scrollEnabled={true}>
+          <ScrollView>
+            <View style={styles.form}>
+              <Text style={styles.label}>
+                Brand Name like
+              </Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => {
+                  this.setState({ name: text })
+                }}
+              />
+              <Text style={styles.label}>
+                Model like
+              </Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => {
+                  this.setState({ model: text })
+                }}
+              />
+              <Text style={styles.label}>
+                Color like
+              </Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => {
+                  this.setState({ color: text })
+                }}
+              />
+              <Text style={styles.label}>
+                Doors =
+              </Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => {
+                  this.setState({ doors: text })
+                }}
+              />
+              <Text style={styles.label}>
+                Year =
+              </Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => {
+                  this.setState({ year: text })
+                }}
+              />
+              <Text style={styles.label}>
+                km =
+              </Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => {
+                  this.setState({ km: text })
+                }}
+              />
+              <Text style={styles.label}>
+                Price =
+              </Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => {
+                  this.setState({ price: text })
+                }}
+              />
+            </View>
+          </ScrollView>
+        </KeyboardAwareScrollView>
         <ButtonGroup
           buttons={buttons}
           containerStyle={{ position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
-          onPress={(index) => index == 0 ? this.props.navigation.goBack() : this.searchCar()}
+          onPress={(index) => {
+            if (index == 0) {
+              this.props.navigation.goBack()
+            } else if (index == 1) {
+              this.selectAll()
+            } else {
+              this.searchCar()
+            }
+          }}
         />
       </View>
     );
