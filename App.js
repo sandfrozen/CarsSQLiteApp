@@ -10,6 +10,7 @@ const db = SQLite.openDatabase("carsDB.db");
 
 const iosBlue = 'rgb(0, 122, 255)'
 const iosRed = 'rgb(255, 59, 48)'
+const buttonsHeight = 40
 
 class CarsScreen extends React.Component {
 
@@ -26,14 +27,20 @@ class CarsScreen extends React.Component {
     const params = navigation.state.params || {};
 
     return {
-      headerTitle: 'Cars',
+      headerTitle: (
+        <Text style={styles.nav} onPress={params.reloadData}>{(params && params.counter ?  "Cars: " + params.counter : "Cars")}</Text>
+      ),
       // headerBackTitle: 'Cars',
     }
   };
 
   componentWillMount() {
     this.sqlCreateTable();
+    this.props.navigation.setParams({ reloadData: this._reloadData });
   }
+  _reloadData = () => {
+    this.sqlSelectAllCars();
+  };
 
   goToSearch = () => {
     this.props.navigation.navigate('Search', {
@@ -72,6 +79,7 @@ class CarsScreen extends React.Component {
         this.setState({
           carList: this.state.carList.cloneWithRows(temp),
         })
+        this.props.navigation.setParams({ counter: this.state.carList.getRowCount() });
       })
     })
   }
@@ -89,6 +97,7 @@ class CarsScreen extends React.Component {
         this.setState({
           carList: this.state.carList.cloneWithRows(temp),
         })
+        this.props.navigation.setParams({ counter: this.state.carList.getRowCount() });
         AlertIOS.alert(
           'Founded ' + this.state.carList.getRowCount() + " cars.",
           '',
@@ -144,7 +153,7 @@ class CarsScreen extends React.Component {
     const buttons = [{ element: component1 }, { element: component2 }, { element: component3 }]
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ScrollView style={{ width: "100%", marginBottom: 40 }}>
+        <ScrollView style={{ width: "100%", marginBottom: buttonsHeight }}>
           <List>
             <ListView
               dataSource={this.state.carList}
@@ -155,7 +164,7 @@ class CarsScreen extends React.Component {
         </ScrollView>
         <ButtonGroup
           buttons={buttons}
-          containerStyle={{ position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
+          containerStyle={{ height: buttonsHeight, position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
           onPress={(index) => {
             if (index == 0) {
               this.askDeleteAll()
@@ -255,7 +264,7 @@ class DetailsScreen extends React.Component {
         </ScrollView>
         <ButtonGroup
           buttons={buttons}
-          containerStyle={{ position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
+          containerStyle={{ height: buttonsHeight, position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
           onPress={(index) => {
             if (index == 0) {
               this.props.navigation.state.params.CarsScreen.sqlSelectAllCars();
@@ -483,7 +492,7 @@ class AddScreen extends React.Component {
         </KeyboardAwareScrollView>
         <ButtonGroup
           buttons={buttons}
-          containerStyle={{ position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
+          containerStyle={{ height: buttonsHeight, position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
           onPress={(index) => index == 0 ? this.props.navigation.goBack() : this.addCar()}
         />
       </View>
@@ -685,7 +694,7 @@ class EditScreen extends React.Component {
         </KeyboardAwareScrollView>
         <ButtonGroup
           buttons={buttons}
-          containerStyle={{ position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
+          containerStyle={{ height: buttonsHeight, position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
           onPress={(index) => index == 0 ? this.props.navigation.goBack() : this.saveChanges()}
         />
       </View>
@@ -876,7 +885,7 @@ class SerachScreen extends React.Component {
         </KeyboardAwareScrollView>
         <ButtonGroup
           buttons={buttons}
-          containerStyle={{ position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
+          containerStyle={{ height: buttonsHeight, position: 'absolute', left: 0, right: 0, bottom: 0, marginLeft: 0, marginBottom: 0, marginRight: 0, marginTop: 0 }}
           onPress={(index) => {
             if (index == 0) {
               this.props.navigation.goBack()
@@ -983,5 +992,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'stretch',
+  },
+  nav: {
+    fontSize: 17,
+    color: 'black',
+    fontWeight: '800',
   }
 });
