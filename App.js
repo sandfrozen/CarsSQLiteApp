@@ -96,7 +96,7 @@ class CarsScreen extends React.Component {
             { text: 'OK', style: 'cancel' },
           ],
         )
-        
+
       })
     })
   }
@@ -350,125 +350,134 @@ class AddScreen extends React.Component {
         <KeyboardAwareScrollView scrollEnabled={true}>
           <ScrollView>
             <View style={styles.form}>
-              <Text>
-                Brand Name:
-            </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  car.name = text;
-                  this.setState({ car: car })
-                }}
-                blurOnSubmit={false}
-                returnKeyType={"next"}
-                ref={input => {
-                  this.inputs['1'] = input;
-                }}
-                onSubmitEditing={() => {
-                  this.focusNextField('2');
-                }}
-              />
-              <Text style={styles.label}>
-                Model:
-            </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  car.model = text;
-                  this.setState({ car: car })
-                }}
-                blurOnSubmit={false}
-                returnKeyType={"next"}
-                ref={input => {
-                  this.inputs['2'] = input;
-                }}
-                onSubmitEditing={() => {
-                  this.focusNextField('3');
-                }}
-              />
-              <Text style={styles.label}>
-                Color:
-            </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  car.color = text;
-                  this.setState({ car: car })
-                }}
-                blurOnSubmit={false}
-                returnKeyType={"next"}
-                ref={input => {
-                  this.inputs['3'] = input;
-                }}
-                onSubmitEditing={() => {
-                  this.focusNextField('4');
-                }}
-              />
-              <Text style={styles.label}>
-                Doors:
-            </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  car.doors = text;
-                  this.setState({ car: car })
-                }}
-                blurOnSubmit={false}
-                returnKeyType={"next"}
-                ref={input => {
-                  this.inputs['4'] = input;
-                }}
-                onSubmitEditing={() => {
-                  this.focusNextField('5');
-                }}
-              />
-              <Text style={styles.label}>
-                Year:
-            </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  car.year = text;
-                  this.setState({ car: car })
-                }}
-                blurOnSubmit={false}
-                returnKeyType={"next"}
-                ref={input => {
-                  this.inputs['5'] = input;
-                }}
-                onSubmitEditing={() => {
-                  this.focusNextField('6');
-                }}
-              />
-              <Text style={styles.label}>
-                km:
-            </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  car.km = text;
-                  this.setState({ car: car })
-                }}
-                blurOnSubmit={false}
-                returnKeyType={"next"}
-                ref={input => {
-                  this.inputs['6'] = input;
-                }}
-                onSubmitEditing={() => {
-                  this.focusNextField('7');
-                }}
-              />
-              <Text style={styles.label}>
-                Price:
-            </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  car.price = text;
-                  this.setState({ car: car })
-                }}
-                returnKeyType={"done"}
-              />
+              <View style={styles.row}>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Brand Name:</Text>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={(text) => {
+                      car.name = text;
+                      this.setState({ car: car })
+                    }}
+                    blurOnSubmit={false}
+                    returnKeyType={"next"}
+                    ref={input => {
+                      this.inputs['1'] = input;
+                    }}
+                    onSubmitEditing={() => {
+                      this.focusNextField('2');
+                    }}
+                  />
+                </View>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Model:</Text>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={(text) => {
+                      car.model = text;
+                      this.setState({ car: car })
+                    }}
+                    blurOnSubmit={false}
+                    returnKeyType={"next"}
+                    ref={input => {
+                      this.inputs['2'] = input;
+                    }}
+                    onSubmitEditing={() => {
+                      this.focusNextField('3');
+                    }}
+                  />
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Color:</Text>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={(text) => {
+                      car.color = text;
+                      this.setState({ car: car })
+                    }}
+                    blurOnSubmit={false}
+                    returnKeyType={"next"}
+                    ref={input => {
+                      this.inputs['3'] = input;
+                    }}
+                    onSubmitEditing={() => {
+                      this.focusNextField('4');
+                    }}
+                  />
+                </View>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Doors:</Text>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={(text) => {
+                      car.doors = text;
+                      this.setState({ car: car })
+                    }}
+                    blurOnSubmit={false}
+                    returnKeyType={"next"}
+                    ref={input => {
+                      this.inputs['4'] = input;
+                    }}
+                    onSubmitEditing={() => {
+                      this.focusNextField('5');
+                    }}
+                  />
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Year:</Text>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={(text) => {
+                      car.year = text;
+                      this.setState({ car: car })
+                    }}
+                    blurOnSubmit={false}
+                    returnKeyType={"next"}
+                    ref={input => {
+                      this.inputs['5'] = input;
+                    }}
+                    onSubmitEditing={() => {
+                      this.focusNextField('6');
+                    }}
+                  />
+                </View>
+                <View style={styles.col}>
+                  <Text style={styles.label}>km:</Text>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={(text) => {
+                      car.km = text;
+                      this.setState({ car: car })
+                    }}
+                    blurOnSubmit={false}
+                    returnKeyType={"next"}
+                    ref={input => {
+                      this.inputs['6'] = input;
+                    }}
+                    onSubmitEditing={() => {
+                      this.focusNextField('7');
+                    }}
+                  />
+                </View>
+              </View>
+              <View style={styles.col}>
+                <Text style={styles.label}>Price:</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={(text) => {
+                    car.price = text;
+                    this.setState({ car: car })
+                  }}
+                  ref={input => {
+                    this.inputs['7'] = input;
+                  }}
+                  returnKeyType={"done"}
+                />
+              </View>
             </View>
           </ScrollView>
         </KeyboardAwareScrollView>
@@ -534,137 +543,143 @@ class EditScreen extends React.Component {
         <KeyboardAwareScrollView scrollEnabled={true}>
           <ScrollView>
             <View style={styles.form}>
-              <Text>
-                Brand Name:
-            </Text>
-              <TextInput
-                style={styles.input}
-                value={car.name}
-                onChangeText={(text) => {
-                  car.name = text;
-                  this.setState({ car: car })
-                  this.props.navigation.setParams({ car: car });
-                }}
-                blurOnSubmit={false}
-                returnKeyType={"next"}
-                ref={input => {
-                  this.inputs['1'] = input;
-                }}
-                onSubmitEditing={() => {
-                  this.focusNextField('2');
-                }}
-              />
-              <Text style={styles.label}>
-                Model:
-            </Text>
-              <TextInput
-                style={styles.input}
-                value={car.model}
-                onChangeText={(text) => {
-                  car.model = text;
-                  this.setState({ car: car })
-                  this.props.navigation.setParams({ car: car });
-                }}
-                blurOnSubmit={false}
-                returnKeyType={"next"}
-                ref={input => {
-                  this.inputs['2'] = input;
-                }}
-                onSubmitEditing={() => {
-                  this.focusNextField('3');
-                }}
-              />
-              <Text style={styles.label}>
-                Color:
-            </Text>
-              <TextInput
-                style={styles.input}
-                value={car.color}
-                onChangeText={(text) => {
-                  car.color = text;
-                  this.setState({ car: car })
-                }}
-                blurOnSubmit={false}
-                returnKeyType={"next"}
-                ref={input => {
-                  this.inputs['3'] = input;
-                }}
-                onSubmitEditing={() => {
-                  this.focusNextField('4');
-                }}
-              />
-              <Text style={styles.label}>
-                Doors:
-            </Text>
-              <TextInput
-                style={styles.input}
-                value={(car.doors).toString()}
-                onChangeText={(text) => {
-                  car.doors = text;
-                  this.setState({ car: car })
-                }}
-                blurOnSubmit={false}
-                returnKeyType={"next"}
-                ref={input => {
-                  this.inputs['4'] = input;
-                }}
-                onSubmitEditing={() => {
-                  this.focusNextField('5');
-                }}
-              />
-              <Text style={styles.label}>
-                Year:
-            </Text>
-              <TextInput
-                style={styles.input}
-                value={car.year.toString()}
-                onChangeText={(text) => {
-                  car.year = text;
-                  this.setState({ car: car })
-                }}
-                blurOnSubmit={false}
-                returnKeyType={"next"}
-                ref={input => {
-                  this.inputs['5'] = input;
-                }}
-                onSubmitEditing={() => {
-                  this.focusNextField('6');
-                }}
-              />
-              <Text style={styles.label}>
-                km:
-            </Text>
-              <TextInput
-                style={styles.input}
-                value={car.km.toString()}
-                onChangeText={(text) => {
-                  car.km = text;
-                  this.setState({ car: car })
-                }}
-                blurOnSubmit={false}
-                returnKeyType={"next"}
-                ref={input => {
-                  this.inputs['6'] = input;
-                }}
-                onSubmitEditing={() => {
-                  this.focusNextField('7');
-                }}
-              />
-              <Text style={styles.label}>
-                Price:
-            </Text>
-              <TextInput
-                style={styles.input}
-                value={car.price.toString()}
-                onChangeText={(text) => {
-                  car.price = text;
-                  this.setState({ car: car })
-                }}
-                returnKeyType={"done"}
-                ref={input => {
-                  this.inputs['7'] = input;
-                }}
-              />
+              <View style={styles.row}>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Brand Name:</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={car.name}
+                    onChangeText={(text) => {
+                      car.name = text;
+                      this.setState({ car: car })
+                      this.props.navigation.setParams({ car: car });
+                    }}
+                    blurOnSubmit={false}
+                    returnKeyType={"next"}
+                    ref={input => {
+                      this.inputs['1'] = input;
+                    }}
+                    onSubmitEditing={() => {
+                      this.focusNextField('2');
+                    }}
+                  />
+                </View>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Model:</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={car.model}
+                    onChangeText={(text) => {
+                      car.model = text;
+                      this.setState({ car: car })
+                      this.props.navigation.setParams({ car: car });
+                    }}
+                    blurOnSubmit={false}
+                    returnKeyType={"next"}
+                    ref={input => {
+                      this.inputs['2'] = input;
+                    }}
+                    onSubmitEditing={() => {
+                      this.focusNextField('3');
+                    }}
+                  />
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Color:</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={car.color}
+                    onChangeText={(text) => {
+                      car.color = text;
+                      this.setState({ car: car })
+                    }}
+                    blurOnSubmit={false}
+                    returnKeyType={"next"}
+                    ref={input => {
+                      this.inputs['3'] = input;
+                    }}
+                    onSubmitEditing={() => {
+                      this.focusNextField('4');
+                    }}
+                  />
+                </View>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Doors:</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={(car.doors).toString()}
+                    onChangeText={(text) => {
+                      car.doors = text;
+                      this.setState({ car: car })
+                    }}
+                    blurOnSubmit={false}
+                    returnKeyType={"next"}
+                    ref={input => {
+                      this.inputs['4'] = input;
+                    }}
+                    onSubmitEditing={() => {
+                      this.focusNextField('5');
+                    }}
+                  />
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Year:</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={car.year.toString()}
+                    onChangeText={(text) => {
+                      car.year = text;
+                      this.setState({ car: car })
+                    }}
+                    blurOnSubmit={false}
+                    returnKeyType={"next"}
+                    ref={input => {
+                      this.inputs['5'] = input;
+                    }}
+                    onSubmitEditing={() => {
+                      this.focusNextField('6');
+                    }}
+                  />
+                </View>
+                <View style={styles.col}>
+                  <Text style={styles.label}>km:</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={car.km.toString()}
+                    onChangeText={(text) => {
+                      car.km = text;
+                      this.setState({ car: car })
+                    }}
+                    blurOnSubmit={false}
+                    returnKeyType={"next"}
+                    ref={input => {
+                      this.inputs['6'] = input;
+                    }}
+                    onSubmitEditing={() => {
+                      this.focusNextField('7');
+                    }}
+                  />
+                </View>
+              </View>
+              <View style={styles.col}>
+                <Text style={styles.label}>Price:</Text>
+                <TextInput
+                  style={styles.input}
+                  value={car.price.toString()}
+                  onChangeText={(text) => {
+                    car.price = text;
+                    this.setState({ car: car })
+                  }}
+                  returnKeyType={"done"}
+                  ref={input => {
+                    this.inputs['7'] = input;
+                  }}
+                />
+              </View>
             </View>
           </ScrollView>
         </KeyboardAwareScrollView>
@@ -688,10 +703,14 @@ class SerachScreen extends React.Component {
       model: "",
       color: "",
 
-      doors: null,
-      year: null,
-      km: null,
-      price: null,
+      doorsMin: 1,
+      doorsMax: 7,
+      yearMin: 1990,
+      yearMax: 2018,
+      kmMin: 0,
+      kmMax: 999999,
+      priceMin: 0,
+      priceMax: 999999,
     }
   }
 
@@ -708,18 +727,11 @@ class SerachScreen extends React.Component {
 
     let query = 'SELECT * FROM Cars WHERE name LIKE \'%' + this.state.name + '%\' AND model LIKE \'%' + this.state.model + '%\' AND color LIKE \'%' + this.state.color + '%\''
 
-    if (this.state.doors) {
-      query = query + ' AND doors=' + this.state.doors;
-    }
-    if (this.state.year) {
-      query = query + ' AND year=' + this.state.year;
-    }
-    if (this.state.km) {
-      query = query + ' AND km=' + this.state.km;
-    }
-    if (this.state.price) {
-      query = query + ' AND price=' + this.state.price;
-    }
+
+    query = query + ' AND doors>=' + this.state.doorsMin + ' AND doors<=' + this.state.doorsMax;
+    query = query + ' AND year>=' + this.state.yearMin + ' AND year<=' + this.state.yearMax;
+    query = query + ' AND km>=' + this.state.kmMin + ' AND km<=' + this.state.kmMax;
+    query = query + ' AND price>=' + this.state.priceMin + ' AND price<=' + this.state.priceMax;
 
     query = query + ';'
 
@@ -742,69 +754,123 @@ class SerachScreen extends React.Component {
         <KeyboardAwareScrollView scrollEnabled={true}>
           <ScrollView>
             <View style={styles.form}>
-              <Text style={styles.label}>
-                Brand Name like
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  this.setState({ name: text })
-                }}
-              />
-              <Text style={styles.label}>
-                Model like
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  this.setState({ model: text })
-                }}
-              />
-              <Text style={styles.label}>
-                Color like
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  this.setState({ color: text })
-                }}
-              />
-              <Text style={styles.label}>
-                Doors =
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  this.setState({ doors: text })
-                }}
-              />
-              <Text style={styles.label}>
-                Year =
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  this.setState({ year: text })
-                }}
-              />
-              <Text style={styles.label}>
-                km =
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  this.setState({ km: text })
-                }}
-              />
-              <Text style={styles.label}>
-                Price =
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => {
-                  this.setState({ price: text })
-                }}
-              />
+              <View style={styles.row}>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Brand Name like</Text>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={(text) => {
+                      this.setState({ name: text })
+                    }}
+                  />
+                </View>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Model like</Text>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={(text) => {
+                      this.setState({ model: text })
+                    }}
+                  />
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Color like</Text>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={(text) => {
+                      this.setState({ color: text })
+                    }}
+                  />
+                </View>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Doors min</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={this.state.doorsMin.toString()}
+                    onChangeText={(text) => {
+                      this.setState({ doorsMin: text })
+                    }}
+                  />
+                </View>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Doors max</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={this.state.doorsMax.toString()}
+                    onChangeText={(text) => {
+                      this.setState({ doorsMax: text })
+                    }}
+                  />
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Year min</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={this.state.yearMin.toString()}
+                    onChangeText={(text) => {
+                      this.setState({ yearMin: text })
+                    }}
+                  />
+                </View>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Year max</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={this.state.yearMax.toString()}
+                    onChangeText={(text) => {
+                      this.setState({ yearMax: text })
+                    }}
+                  />
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.col}>
+                  <Text style={styles.label}>km min</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={this.state.kmMin.toString()}
+                    onChangeText={(text) => {
+                      this.setState({ kmMin: text })
+                    }}
+                  />
+                </View>
+                <View style={styles.col}>
+                  <Text style={styles.label}>km max</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={this.state.kmMax.toString()}
+                    onChangeText={(text) => {
+                      this.setState({ kmMax: text })
+                    }}
+                  />
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Price min</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={this.state.priceMin.toString()}
+                    onChangeText={(text) => {
+                      this.setState({ priceMin: text })
+                    }}
+                  />
+                </View>
+                <View style={styles.col}>
+                  <Text style={styles.label}>Price max</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={this.state.priceMax.toString()}
+                    onChangeText={(text) => {
+                      this.setState({ priceMax: text })
+                    }}
+                  />
+                </View>
+              </View>
             </View>
           </ScrollView>
         </KeyboardAwareScrollView>
@@ -883,18 +949,21 @@ const styles = StyleSheet.create({
   form: {
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    padding: 16,
   },
   input: {
     height: 30,
-    borderColor: 'gray',
+    backgroundColor: 'white',
+    borderColor: 'lightgray',
     borderWidth: 1,
-    borderRadius: 4,
+    borderRadius: 2,
     paddingVertical: 2,
     paddingHorizontal: 5,
   },
   label: {
     paddingTop: 16,
+    marginLeft: 1,
+    color: 'gray',
+    fontSize: 12,
   },
   text: {
     backgroundColor: 'whitesmoke',
@@ -902,4 +971,17 @@ const styles = StyleSheet.create({
     fontSize: 24,
     padding: 10,
   },
+  row: {
+    paddingVertical: 2,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  col: {
+    paddingHorizontal: 12,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+  }
 });
