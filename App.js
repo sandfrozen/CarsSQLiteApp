@@ -294,11 +294,11 @@ class AddScreen extends React.Component {
         model: "Test",
         color: 'Test',
 
-        doors: 1,
-        year: 2,
-        km: 3,
+        doors: 2,
+        year: 2003,
+        km: 4000,
 
-        price: 4.5,
+        price: 5000,
       }
     }
     this.focusNextField = this.focusNextField.bind(this);
@@ -735,7 +735,6 @@ class SerachScreen extends React.Component {
   searchCar = () => {
 
     let query = 'SELECT * FROM Cars WHERE name LIKE \'%' + this.state.name + '%\' AND model LIKE \'%' + this.state.model + '%\' AND color LIKE \'%' + this.state.color + '%\''
-
 
     query = query + ' AND doors>=' + this.state.doorsMin + ' AND doors<=' + this.state.doorsMax;
     query = query + ' AND year>=' + this.state.yearMin + ' AND year<=' + this.state.yearMax;
